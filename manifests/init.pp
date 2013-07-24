@@ -39,15 +39,15 @@ class zabbixagent(
   #
   # check os and version
   #
-  if $::operatingsystem == "centos" {
+  $os_release = $::operatingsystemrelease
+    
+  $msg_untestedrelease = "Untested version ($os_release) of operating system..."
+    
+  $msg_testedrelease = "Tested on this version ($os_release) of operating system... OK"
+    
+  $msg_untestedos = "Untested operating system..."
   
-    $os_release = $::operatingsystemrelease
-    
-    $msg_untestedrelease = "Untested version ($os_release) of operating system..."
-    
-    $msg_testedrelease = "Tested on this version ($os_release) of operating system... OK"
-    
-    $msg_untestedos = "Untested operating system..."
+  if $::operatingsystem == "centos" {
     
     if( $os_release >= 5 and $os_release < 5.9) {
 	notice "Tested on a newer version of operating system than this ($os_release). Please update your OS."
