@@ -65,6 +65,16 @@ class zabbixagent(
          notice $msg_untestedrelease
     }
   }
+  elsif($::operatingsystem == "ubuntu") {
+  
+         if( $os_release == 12.04 ){
+             notice $msg_testedrelease
+         }
+         else {
+            notice $msg_untestedrelease
+         }
+  
+  }
   else{
      notice $msg_untestedos
   }
@@ -121,9 +131,10 @@ class zabbixagent(
 
       if $version_real == 2 {
 
-        notice "I can't install version ${version} of zabbix-agent."
-        notice "exiting..."
-      
+	package {$package :
+            ensure => '1:2.0.6-2+precise'
+        }
+   
       }
       elsif $version_real == 1 {
       
