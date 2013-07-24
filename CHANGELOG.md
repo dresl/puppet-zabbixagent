@@ -1,3 +1,11 @@
+2013-07-25 Release 1.2.1
+
+Bugfixes:
+- repaid failing 
+    - part "debian, ubuntu"
+	Added apt-update command after install repo package
+	Added more subscribe commands
+
 2013-07-25 Release 1.2.0
 
 Changes:

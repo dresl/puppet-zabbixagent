@@ -157,8 +157,14 @@ class zabbixagent(
                 subscribe => Package["zabbix_repo"],
             }
 
+            exec { 'apt-get update':
+               command => '/usr/bin/apt-get update',
+               subscribe => Package["zabbix_repo"],
+            }
+
 	    package {$package :
-        	ensure => '1:2.0.6-2+precise'
+        	ensure => '1:2.0.6-2+precise',
+        	require => Exec['apt-get update']
     	    }
     	    
 	}
