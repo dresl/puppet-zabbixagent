@@ -47,13 +47,19 @@ class zabbixagent(
     
     $msg_testedrelease = "Tested on this version ($os_release) of operating system... OK"
     
-    $msg_testedos = "Unested operating system..."
+    $msg_untestedos = "Untested operating system..."
     
     if( $os_release >= 5 and $os_release < 5.9) {
 	notice "Tested on a newer version of operating system than this ($os_release). Please update your OS."
     }
     elsif( $os_release >= 5 and $os_release < 6) {
 	notice $msg_testedrelease
+    }
+    elsif( $os_release >= 6 and $os_release < 6.4) {
+        notice "Tested on a newer version of operating system than this ($os_release). Please update your OS."
+    }
+    elsif( $os_release == 6.4) {
+        notice $msg_testedrelease
     }
     else {
          notice $msg_untestedrelease
