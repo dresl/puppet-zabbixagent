@@ -1,3 +1,9 @@
+2013-07-25 Release 1.2.0
+
+Changes:
+- Added subscribe parameter for ini_setting on "debian, ubuntu" part
+- Added installation zabbix repo file - for Ubuntu 12.04
+
 2013-07-25 Release 1.1.1
 
 Bugfixes:

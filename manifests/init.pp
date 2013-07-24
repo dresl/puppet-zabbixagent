@@ -135,9 +135,32 @@ class zabbixagent(
 
 	if( $os_release == 12.04 ){
 	
+            #download a install repo file
+
+            $file = "http://repo.zabbix.com/zabbix/2.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_2.0-1precise_all.deb"
+            $dfile = "/tmp/zabbix-release_2.0-1precise_all.deb"
+
+            exec { "download repo file":
+              command => "wget '$file' -O $dfile",
+              path => "/usr/bin",
+            }
+
+            package {"zabbix_repo":
+                provider => dpkg,
+                ensure => installed,
+                source => "$dfile",
+                subscribe => Exec["download repo file"],
+            }
+
+            file { "$dfile" :
+                ensure => absent,
+                subscribe => Package["zabbix_repo"],
+            }
+
 	    package {$package :
         	ensure => '1:2.0.6-2+precise'
     	    }
+    	    
 	}
 	else{
 	    notice "I can't install version ${version} of zabbix-agent on this OS Release ($os_release)."
@@ -224,13 +247,13 @@ class zabbixagent(
     
     debian, ubuntu: {
 
-
       ini_setting { 'servers setting':
         ensure  => present,
         path    => '/etc/zabbix/zabbix_agentd.conf',
         section => '',
         setting => 'Server',
         value   => join(flatten([$servers_real]), ','),
+        subscribe => Package[$package],
       }
 
       if $version_real == 2 {
@@ -241,6 +264,7 @@ class zabbixagent(
          section => '',
          setting => 'ServerActive',
          value   => join(flatten([$active_servers_real]), ','),
+         subscribe => Ini_setting['servers setting'],
         }
 
       }
@@ -251,6 +275,7 @@ class zabbixagent(
         section => '',
         setting => 'Hostname',
         value   => $hostname_real,
+        subscribe => Ini_setting['servers setting'],
       }
 
       ini_setting { 'Include setting':
@@ -258,18 +283,22 @@ class zabbixagent(
         path    => '/etc/zabbix/zabbix_agentd.conf',
         section => '',
         setting => 'Include',
-        value   => '/etc/zabbix/zabbix_agentd/'
+        value   => '/etc/zabbix/zabbix_agentd/',
+        subscribe => Ini_setting['hostname setting'],
       }
 
       file { '/etc/zabbix/zabbix_agentd':
-        ensure  => directory
+        ensure  => directory,
+        subscribe => Ini_setting['Include setting'],
       }
 
       service {'zabbix-agent' :
         ensure  => running,
         enable  => true,
         require => Package[$package],
+        subscribe => File['/etc/zabbix/zabbix_agentd'],
       }
+
 
     }
     windows: {
