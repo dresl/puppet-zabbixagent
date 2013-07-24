@@ -129,16 +129,23 @@ class zabbixagent(
 
     debian, ubuntu: {
 
+      $package = "zabbix-agent"
+
       if $version_real == 2 {
 
-	package {$package :
-            ensure => '1:2.0.6-2+precise'
-        }
-   
+	if( $os_release == 12.04 ){
+	
+	    package {$package :
+        	ensure => '1:2.0.6-2+precise'
+    	    }
+	}
+	else{
+	    notice "I can't install version ${version} of zabbix-agent on this OS Release ($os_release)."
+	    notice "exiting..."             
+	}     
+	                         
       }
       elsif $version_real == 1 {
-      
-        $package = "zabbix-agent"
 
         package {$package :
     	    ensure  => installed

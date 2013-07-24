@@ -1,3 +1,9 @@
+2013-07-25 Release 1.1.1
+
+Bugfixes:
+- fix variables in package part on ubuntu os
+- added check of os_release in package part on debian,ubuntu
+
 2013-07-25 Release 1.1.0
 
 Changes:
