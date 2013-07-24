@@ -308,11 +308,3 @@ class zabbixagent(
     default: { notice "Unsupported operatingsystem  ${::operatingsystem}" }
   }
 }
-
-
-class { 'zabbixagent':
-  servers  => '10.0.20.16',
-  active_servers  => '10.0.20.16',
-  hostname => 'learn.cloudlab.cz',
-  version => '2'
-}
