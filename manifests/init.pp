@@ -163,7 +163,7 @@ class zabbixagent(
             }
 
 	    package {$package :
-        	ensure => '1:2.0.6-2+precise',
+		ensure => '1:2.0.7-1+precise',
         	require => Exec['apt-get update']
     	    }
     	    
