@@ -94,6 +94,11 @@ UserParameter=custom.vfs.dev.iostats.avgqu[*],/usr/local/bin/zbx_parse_iostat_va
 UserParameter=custom.vfs.dev.iostats.await[*],/usr/local/bin/zbx_parse_iostat_values.sh \$1 \"await\"
 UserParameter=custom.vfs.dev.iostats.svctm[*],/usr/local/bin/zbx_parse_iostat_values.sh \$1 \"svctm\"
 UserParameter=custom.vfs.dev.iostats.util[*],/usr/local/bin/zbx_parse_iostat_values.sh \$1 \"%util\"
+#new (ubuntu)
+UserParameter=custom.vfs.dev.iostats.rkbs[*],/usr/local/bin/zbx_parse_iostat_values.sh \$1 \"rkB/s\"
+UserParameter=custom.vfs.dev.iostats.wkbs[*],/usr/local/bin/zbx_parse_iostat_values.sh \$1 \"wkB/s\"
+UserParameter=custom.vfs.dev.iostats.rawait[*],/usr/local/bin/zbx_parse_iostat_values.sh \$1 \"r_await\"
+UserParameter=custom.vfs.dev.iostats.wawait[*],/usr/local/bin/zbx_parse_iostat_values.sh \$1 \"w_await\"
 "
 
     file { "/etc/zabbix/zabbix_agentd/zabbix-disk-io-stats.conf":
